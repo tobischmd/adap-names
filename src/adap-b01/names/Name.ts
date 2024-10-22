@@ -6,18 +6,21 @@ export class Name {
     private components: string[] = [];
     private delimiter: string = this.DEFAULT_DELIMITER;
 
+    /** @methodtype get-method */
     constructor(other: string[], delimiter?: string) {
-        if (delimiter != undefined) {
+        if (delimiter !== undefined) {
             this.delimiter = delimiter;
         }
         this.components = other;
     }
 
+    /** @methodtype conversion-method */
     /** Returns human-readable representation of Name instance */
     public asNameString(delimiter: string = this.delimiter): string {
         return this.components.join(delimiter);
     }
 
+    /** @methodtype get-method */
     public getComponent(i: number): string {
         if (i < 0 || i >= this.components.length) {
             throw new Error("Index out of bounds");
@@ -25,6 +28,7 @@ export class Name {
         return this.components[i];
     }
 
+    /** @methodtype set-method */
     public setComponent(i: number, c: string): void {
         if (i < 0 || i >= this.components.length) {
             throw new Error("Index out of bounds");
@@ -32,11 +36,13 @@ export class Name {
         this.components[i] = c;
     }
 
-     /** Returns number of components in Name instance */
-     public getNoComponents(): number {
+    /** Returns number of components in Name instance */
+    /** @methodtype get-method */
+    public getNoComponents(): number {
         return this.components.length;
     }
 
+    /** @methodtype command-method */
     public insert(i: number, c: string): void {
         if (i < 0 || i > this.components.length) {
             throw new Error("Index out of bounds");
@@ -44,10 +50,12 @@ export class Name {
         this.components.splice(i, 0, c);
     }
 
+    /** @methodtype command-method */
     public append(c: string): void {
         this.components.push(c);
     }
 
+    /** @methodtype command-method */
     public remove(i: number): void {
         if (i < 0 || i >= this.components.length) {
             throw new Error("Index out of bounds");
