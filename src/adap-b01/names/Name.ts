@@ -17,7 +17,7 @@ export class Name {
     /** @methodtype conversion-method */
     /** Returns human-readable representation of Name instance */
     public asNameString(delimiter: string = this.delimiter): string {
-        return this.components.join(delimiter);
+        return this.components.map(c => this.escape(c, delimiter)).join(delimiter);
     }
 
     /** @methodtype get-method */
@@ -63,4 +63,8 @@ export class Name {
         this.components.splice(i, 1);
     }
 
+    /** @methotype helper-method */
+    public escape(s: string, d: string): string {
+        return s.split(d).join(this.ESCAPE_CHARACTER + d);
+    }
 }

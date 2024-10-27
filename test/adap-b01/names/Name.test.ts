@@ -33,3 +33,10 @@ describe("Escape character extravaganza", () => {
     expect(n.asNameString()).toBe("oss.cs.fau.de#people");
   });
 });
+
+describe("Test Escape", () => {
+  it("test escape", () => {
+    let n: Name = new Name(["oss#de", "hallo"], '#');
+    expect(n.asNameString()).toBe("oss\\#de#hallo");
+  });
+})
