@@ -5,52 +5,89 @@ export class StringArrayName implements Name {
     protected components: string[] = [];
     protected delimiter: string = DEFAULT_DELIMITER;
 
+    /** @methodtype initialization-method */
     constructor(other: string[], delimiter?: string) {
-        throw new Error("needs implementation");
+        if (delimiter !== undefined) {
+            this.delimiter = delimiter;
+        }
+        this.components = other;
     }
+
 
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+        return this.components.join(delimiter);
     }
 
+    /** @methodtype conversion-method */
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return this.components.map(c => this.escape(c, this.delimiter)).join(this.delimiter);
     }
 
+    /** @methodtype boolean-query-method */
     public isEmpty(): boolean {
-        throw new Error("needs implementation");
+        return this.components.length === 0;
     }
 
+    /** @methodtype get-method */
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
+        return this.delimiter;
     }
 
+    /** @methodtype get-method */
     public getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.components.length;
     }
 
+    /** @methodtype get-method */
     public getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Index out of bounds");
+        }
+        return this.components[i];
     }
 
+    /** @methodtype set-method */
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Index out of bounds");
+        }
+        this.components[i] = c;
     }
 
+    /** @methodtype command-method */
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation");
+        if (i < 0 || i > this.components.length) {
+            throw new Error("Index out of bounds");
+        }
+        this.components.splice(i, 0, c);
     }
 
+
+    /** @methodtype command-method */
     public append(c: string): void {
-        throw new Error("needs implementation");
+        this.components.push(c);
     }
 
+
+    /** @methodtype command-method */
     public remove(i: number): void {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error("Index out of bounds");
+        }
+        this.components.splice(i, 1);
     }
 
+    /** @methodtype command-method */
     public concat(other: Name): void {
-        throw new Error("needs implementation");
+        for (let i = 0; i < other.getNoComponents(); i++) {
+            this.append(other.getComponent(i));
+        }
     }
+
+    /** @methotype helper-method */
+    public escape(s: string, d: string): string {
+        return s.split(d).join(ESCAPE_CHARACTER + d);
+    }
+
 
 }
