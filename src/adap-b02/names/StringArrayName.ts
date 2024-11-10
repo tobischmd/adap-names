@@ -14,6 +14,7 @@ export class StringArrayName implements Name {
     }
 
 
+    /** @methodtype conversion-method */
     public asString(delimiter: string = this.delimiter): string {
         return this.components.join(delimiter);
     }
