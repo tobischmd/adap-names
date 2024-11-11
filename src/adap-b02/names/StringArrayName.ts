@@ -10,7 +10,7 @@ export class StringArrayName implements Name {
         if (delimiter !== undefined) {
             this.delimiter = delimiter;
         }
-        this.components = other;
+        this.components = other.map(c => this.unescape(c, this.delimiter));
     }
 
 
@@ -88,6 +88,11 @@ export class StringArrayName implements Name {
     /** @methotype helper-method */
     public escape(s: string, d: string): string {
         return s.split(d).join(ESCAPE_CHARACTER + d);
+    }
+
+    /** @methotype helper-method */
+    public unescape(s: string, d: string): string {
+        return s.split(ESCAPE_CHARACTER + d).join(d);
     }
 
 

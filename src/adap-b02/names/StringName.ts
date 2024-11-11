@@ -13,16 +13,13 @@ export class StringName implements Name {
             this.delimiter = delimiter;
         }
         this.name = other;
-        this.length = this.name.split(this.delimiter).length;
+        this.length = this.splitIntoComponents(this.name).length;
     }
 
 
     /** @methodtype conversion-method */
     public asString(delimiter: string = this.delimiter): string {
-        if (delimiter === this.delimiter) {
-            return this.name;
-        }
-        return this.splitIntoComponents(this.name).map(s => this.escape(this.unescape(s, this.delimiter), delimiter)).join(delimiter);
+        return this.splitIntoComponents(this.name).map(s => this.unescape(s, this.delimiter)).join(delimiter);
     }
 
     /** @methodtype conversion-method */
@@ -52,7 +49,7 @@ export class StringName implements Name {
             throw new Error("Index out of bounds");
         }
 
-        return this.unescape(this.splitIntoComponents(this.name)[x], this.delimiter);
+        return this.splitIntoComponents(this.name)[x];
     }
 
     /** @methodtype set-method */
@@ -60,8 +57,8 @@ export class StringName implements Name {
         if (n < 0 || n >= this.length) {
             throw new Error("Index out of bounds");
         }
-        let components = this.name.split(this.delimiter);
-        components[n] = c;
+        let components = this.splitIntoComponents(this.name);
+        components[n] = this.escape(this.unescape(c, this.delimiter), this.delimiter);
         this.name = components.join(this.delimiter);
     }
 
@@ -115,7 +112,11 @@ export class StringName implements Name {
         for (let i = 0; i < s.length; i++) {
             if (s[i] === ESCAPE_CHARACTER) {
                 current += s[i];
+                if (escaped) {
+                    escaped = false;
+                } else {
                 escaped = true;
+                }
             } else if (s[i] === this.delimiter && !escaped) {
                 components.push(current);
                 current = "";
