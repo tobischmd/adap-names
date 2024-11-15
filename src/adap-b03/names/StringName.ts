@@ -8,27 +8,87 @@ export class StringName extends AbstractName {
 
     constructor(other: string, delimiter?: string) {
         super();
-        throw new Error("needs implementation");
+        this.name = other;
+        this.length = this.splitIntoComponents(this.name).length;
     }
 
     getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.length;
+    }
+
+    asDataString(): string {
+        return this.name;
+    }
+
+    asString(delimiter: string = this.delimiter): string {
+        return this.splitIntoComponents(this.name).map(s => this.unescape(s, this.delimiter)).join(delimiter);
     }
 
     getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.length) {
+            throw new Error("Index out of bounds");
+        }
+
+        return this.splitIntoComponents(this.name)[i];
     }
     setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.length) {
+            throw new Error("Index out of bounds");
+        }
+        let components = this.splitIntoComponents(this.name);
+        components[i] = c;
+        this.name = components.join(this.delimiter);
     }
 
     insert(i: number, c: string) {
-        throw new Error("needs implementation");
+        if (i < 0 || i > this.length) {
+            throw new Error("Index out of bounds");
+        }
+        let components = this.splitIntoComponents(this.name);
+        components.splice(i, 0, c);
+        this.name = components.join(this.delimiter);
+        this.length++;
     }
+
     append(c: string) {
-        throw new Error("needs implementation");
+        let components = this.splitIntoComponents(this.name);
+        components.push(c);
+        this.name = components.join(this.delimiter);
+        this.length++;
     }
+
     remove(i: number) {
-        throw new Error("needs implementation");
+        if (i < 0 || i >= this.length) {
+            throw new Error("Index out of bounds");
+        }
+        let components = this.splitIntoComponents(this.name);
+        components.splice(i, 1);
+        this.name = components.join(this.delimiter);
+        this.length--;
+    }
+
+     /** @methotype helper-method */
+     private splitIntoComponents(s: string): string[] {
+        let components: string[] = [];
+        let escaped = false;
+        let current = "";
+        for (let i = 0; i < s.length; i++) {
+            if (s[i] === ESCAPE_CHARACTER) {
+                current += s[i];
+                if (escaped) {
+                    escaped = false;
+                } else {
+                escaped = true;
+                }
+            } else if (s[i] === this.delimiter && !escaped) {
+                components.push(current);
+                current = "";
+            } else {
+                current += s[i];
+                escaped = false;
+            }
+        }
+        components.push(current);
+        return components;
     }
 }

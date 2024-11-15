@@ -70,6 +70,7 @@ export class StringName implements Name {
         let components = this.splitIntoComponents(this.name);
         components.splice(n, 0, c);
         this.name = components.join(this.delimiter);
+        this.length++;
     }
 
 
@@ -78,6 +79,7 @@ export class StringName implements Name {
         let components = this.splitIntoComponents(this.name);
         components.push(c);
         this.name = components.join(this.delimiter);
+        this.length++;
     }
 
 
@@ -89,6 +91,7 @@ export class StringName implements Name {
         let components = this.splitIntoComponents(this.name);
         components.splice(n, 1);
         this.name = components.join(this.delimiter);
+        this.length--;
     }
 
 
