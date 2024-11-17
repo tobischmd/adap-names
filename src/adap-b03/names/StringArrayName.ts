@@ -6,12 +6,8 @@ export class StringArrayName extends AbstractName {
     protected components: string[] = [];
 
     constructor(other: string[], delimiter?: string) {
-        super();
+        super(delimiter);
         this.components = other.map(c => this.unescape(c, this.delimiter));
-    }
-
-    asDataString(): string {
-        return this.components.map(c => this.escape(c, this.delimiter)).join(this.delimiter);
     }
 
     asString(delimiter: string = this.delimiter): string {

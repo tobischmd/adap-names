@@ -1,6 +1,3 @@
-import { Cloneable } from "../common/Cloneable";
-import { Equality } from "../common/Equality";
-import { Printable } from "../common/Printable";
 import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
 
 export abstract class AbstractName implements Name {
@@ -11,21 +8,50 @@ export abstract class AbstractName implements Name {
         this.delimiter = delimiter;
     }
 
-    abstract asString(delimiter: string): string;
+    public asString(delimiter: string = this.delimiter): string {
+        let s: string = "";
+        for (let i = 0; i < this.getNoComponents(); i++) {
+            s += this.getComponent(i);
+            if (i < this.getNoComponents() - 1) {
+                s += delimiter;
+            }
+        }
+        return s;
+    }
 
     public toString(): string {
         return this.asDataString();
     }
 
-    abstract asDataString(): string;
+    public asDataString(): string {
+        let s: string = "";
+        for (let i = 0; i < this.getNoComponents(); i++) {
+            s += this.escape(this.getComponent(i), this.delimiter);
+            if (i < this.getNoComponents() - 1) {
+                s += this.delimiter;
+            }
+        }
+        return s;
+    }
 
     public isEqual(other: Name): boolean {
-        return this.asDataString() === other.asDataString();
+        if (this.getNoComponents() !== other.getNoComponents()) {
+            return false;
+        }
+        if (this.delimiter !== other.getDelimiterCharacter()) {
+            return false;
+        }
+        for (let i = 0; i < this.getNoComponents(); i++) {
+            if (this.getComponent(i) !== other.getComponent(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public getHashCode(): number {
         let hashCode: number = 0;
-        const s: string = this.asDataString();
+        const s: string = this.asDataString()+this.delimiter;
         for (let i = 0; i < s.length; i++) {
             let c = s.charCodeAt(i);
             hashCode = (hashCode << 5) - hashCode + c;
@@ -35,7 +61,7 @@ export abstract class AbstractName implements Name {
     }
 
     public clone(): Name {
-        return JSON.parse(JSON.stringify(this));
+        return Object.create(this);
     }
 
     public isEmpty(): boolean {

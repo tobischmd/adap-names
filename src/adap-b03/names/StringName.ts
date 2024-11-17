@@ -7,7 +7,7 @@ export class StringName extends AbstractName {
     protected length: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        super();
+        super(delimiter);
         this.name = other;
         this.length = this.splitIntoComponents(this.name).length;
     }
@@ -18,10 +18,6 @@ export class StringName extends AbstractName {
 
     asDataString(): string {
         return this.name;
-    }
-
-    asString(delimiter: string = this.delimiter): string {
-        return this.splitIntoComponents(this.name).map(s => this.unescape(s, this.delimiter)).join(delimiter);
     }
 
     getComponent(i: number): string {
