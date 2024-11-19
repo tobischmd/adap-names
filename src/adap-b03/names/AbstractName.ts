@@ -1,4 +1,5 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 
 export abstract class AbstractName implements Name {
 
@@ -6,6 +7,10 @@ export abstract class AbstractName implements Name {
 
     constructor(delimiter: string = DEFAULT_DELIMITER) {
         this.delimiter = delimiter;
+    }
+
+    public clone(): Name {
+        return Object.create(this);
     }
 
     public asString(delimiter: string = this.delimiter): string {
