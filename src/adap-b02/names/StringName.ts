@@ -5,7 +5,7 @@ export class StringName implements Name {
 
     protected delimiter: string = DEFAULT_DELIMITER;
     protected name: string = "";
-    protected noComponents: number = 0;
+    protected length: number = 0;
 
     /** @methodtype initialization-method */
     constructor(other: string, delimiter?: string) {
