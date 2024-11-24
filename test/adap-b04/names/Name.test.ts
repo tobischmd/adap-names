@@ -1,12 +1,14 @@
 import { describe, it, expect } from "vitest";
 
-import { Name } from "../../../src/adap-b03/names/Name";
-import { StringName } from "../../../src/adap-b03/names/StringName";
-import { StringArrayName } from "../../../src/adap-b03/names/StringArrayName";
+import { Name } from "../../../src/adap-b04/names/Name";
+import { StringName } from "../../../src/adap-b04/names/StringName";
+import { StringArrayName } from "../../../src/adap-b04/names/StringArrayName";
+import exp from "constants";
+import { InvalidStateException } from "../common/InvalidStateException";
 
 describe("Basic StringName function tests", () => {
   it("test insert", () => {
-    let n: Name = new StringName("oss.fau.de");
+    let n: Name = new StringName("oss\.fau\.de");
     n.insert(1, "cs");
     expect(n.asString()).toBe("oss.cs.fau.de");
   });
@@ -173,6 +175,46 @@ describe("Hash code tests for StringArrayName", () => {
     expect(n1.getHashCode()).not.toBe(n2.getHashCode());
   });
 });
+
+describe("Test Precondition Stringname", () => {
+  it ("test Exceptions", () => {
+    expect(() => new StringName("Hans", "Peter")).toThrowError()
+    let n: Name = new StringName("Hallo\.Peter")
+    expect(() => n.asString("Hallo")).toThrowError()
+    expect(() => n.getComponent(-10)).toThrowError()
+    expect(() => n.getComponent(10)).toThrowError()
+    expect(() => n.setComponent(-10, "Hall")).toThrowError()
+    expect(() => n.setComponent(10, "Hallo")).toThrowError()
+    expect(() => n.setComponent(1, "Hal.lo")).toThrowError()
+    expect(() => n.insert(-10, "Hall")).toThrowError()
+    expect(() => n.insert(10, "Hallo")).toThrowError()
+    expect(() => n.insert(1, "Hal.lo")).toThrowError()
+    expect(() => n.remove(-10)).toThrowError()
+    expect(() => n.remove(10)).toThrowError()
+  })
+})
+
+
+describe("Test Precondition StringArrayName", () => {
+  it ("test Exceptions", () => {
+    expect(() => new StringArrayName(["Hans"], "Peter")).toThrowError()
+    let n: Name = new StringArrayName(["Hallo", "Peter"])
+    expect(() => n.asString("Hallo")).toThrowError()
+    expect(() => n.getComponent(-10)).toThrowError()
+    expect(() => n.getComponent(10)).toThrowError()
+    expect(() => n.setComponent(-10, "Hall")).toThrowError()
+    expect(() => n.setComponent(10, "Hallo")).toThrowError()
+    expect(() => n.setComponent(1, "Hal.lo")).toThrowError()
+    expect(() => n.insert(-10, "Hall")).toThrowError()
+    expect(() => n.insert(10, "Hallo")).toThrowError()
+    expect(() => n.insert(1, "Hal.lo")).toThrowError()
+    expect(() => n.remove(-10)).toThrowError()
+    expect(() => n.remove(10)).toThrowError()
+  })
+})
+
+
+
 
 
 

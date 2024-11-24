@@ -77,6 +77,6 @@ export class Name {
 
     /** @methotype helper-method */
     public escape(s: string, d: string): string {
-        return s.split(d).join(this.ESCAPE_CHARACTER + d);
+        return s.split(d).join(ESCAPE_CHARACTER + d);
     }
 }

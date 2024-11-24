@@ -9,9 +9,7 @@ export abstract class AbstractName implements Name {
     protected delimiter: string = DEFAULT_DELIMITER;
 
     constructor(delimiter: string = DEFAULT_DELIMITER) {
-        if (delimiter == null || delimiter.length != 1) {
-            throw new IllegalArgumentException("Delimiter must be a single character");
-        }
+        IllegalArgumentException.assertCondition(delimiter != null && delimiter.length == 1, "Delimiter must be a single character");
         this.delimiter = delimiter;
     }
 
@@ -20,9 +18,7 @@ export abstract class AbstractName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        if (delimiter == null || delimiter.length != 1) {
-            throw new IllegalArgumentException("Delimiter must be a single character");
-        }
+        IllegalArgumentException.assertCondition(delimiter != null && delimiter.length == 1, "Delimiter must be a single character");
         let s: string = "";
         for (let i = 0; i < this.getNoComponents(); i++) {
             s += this.getComponent(i);
@@ -49,9 +45,7 @@ export abstract class AbstractName implements Name {
     }
 
     public isEqual(other: Name): boolean {
-        if (other == null || other == undefined) {
-            throw new IllegalArgumentException("Argument must not be null or undefined");
-        }
+        IllegalArgumentException.assertIsNotNullOrUndefined(other, "Argument must not be null or undefined");
         if (this.getNoComponents() !== other.getNoComponents()) {
             return false;
         }
@@ -95,20 +89,17 @@ export abstract class AbstractName implements Name {
     abstract remove(i: number): void;
 
     public concat(other: Name): void {
-        if (other == null || other == undefined) {
-            throw new IllegalArgumentException("Argument must not be null or undefined");
-        }
+        IllegalArgumentException.assertIsNotNullOrUndefined(other, "Argument must not be null or undefined");
         let oldLength = this.getNoComponents() + other.getNoComponents();
         for (let i = 0; i < other.getNoComponents(); i++) {
             this.append(other.getComponent(i));
         }
-        if (this.getNoComponents() !== oldLength) {
-            throw new MethodFailureException("Concatenation failed");
-        }
+        MethodFailureException.assertCondition(this.getNoComponents() === oldLength, "Concatenation failed");
+    
     }
 
-      /** @methotype helper-method */
-      protected escape(s: string, d: string): string {
+    /** @methotype helper-method */
+    protected escape(s: string, d: string): string {
         return s.split(ESCAPE_CHARACTER).join(ESCAPE_CHARACTER + ESCAPE_CHARACTER).split(d).join(ESCAPE_CHARACTER + d);
     }
 
@@ -122,20 +113,16 @@ export abstract class AbstractName implements Name {
         let escaped = false;
         for (let i = 0; i < c.length; i++) {
             if (escaped) {
-                if (c[i] !== ESCAPE_CHARACTER && c[i] !== this.delimiter) {
-                    throw new IllegalArgumentException("Component is not properly masked");
-                }
+                IllegalArgumentException.assertCondition(c[i] == ESCAPE_CHARACTER || c[i] == this.delimiter, "Component is not properly masked");
                 escaped = false;
             } else {
-                if (c[i] === ESCAPE_CHARACTER) {
+                if (c[i] == ESCAPE_CHARACTER) {
                     escaped = true;
-                } else if (c[i] === this.delimiter) {
+                } else if (c[i] == this.delimiter) {
                     throw new IllegalArgumentException("Component is not properly masked");
                 }
             }
         }
-        if (escaped) {
-            throw new IllegalArgumentException("Component is not properly masked");
-        }
+        IllegalArgumentException.assertCondition(!escaped, "Component is not properly masked");
     }
 }
