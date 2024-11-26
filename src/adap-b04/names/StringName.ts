@@ -3,7 +3,7 @@ import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { MethodFailureException } from "../common/MethodFailureException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 export class StringName extends AbstractName {
 
@@ -38,7 +38,7 @@ export class StringName extends AbstractName {
         let components = this.splitIntoComponents(this.name);
         components[i] = c;
         this.name = components.join(this.delimiter);
-        MethodFailureException.assertCondition(this.getComponent(i) == null || this.getComponent(i) == undefined || this.getComponent(i) !== c, "Setting component failed");
+        MethodFailedException.assertCondition(this.getComponent(i) == null || this.getComponent(i) == undefined || this.getComponent(i) !== c, "Setting component failed");
     }
 
     public insert(i: number, c: string) {
@@ -49,10 +49,10 @@ export class StringName extends AbstractName {
         components.splice(i, 0, c);
         this.name = components.join(this.delimiter);
         if (this.getComponent(i) == null || this.getComponent(i) == undefined || this.getComponent(i) !== c) {
-            throw new MethodFailureException("Inserting component failed");
+            throw new MethodFailedException("Inserting component failed");
         }
         this.noComponents++;
-        MethodFailureException.assertCondition(this.getNoComponents() === components.length, "Inserting component failed");
+        MethodFailedException.assertCondition(this.getNoComponents() === components.length, "Inserting component failed");
         this.empty = false;
     }
 
@@ -64,8 +64,8 @@ export class StringName extends AbstractName {
         this.name = components.join(this.delimiter);
         this.noComponents++;
         this.empty = false;
-        MethodFailureException.assertCondition(this.getComponent(this.getNoComponents() - 1) != null && this.getComponent(this.getNoComponents() - 1) != undefined && this.getComponent(this.getNoComponents() - 1) === c, "Appending component failed");
-        MethodFailureException.assertCondition(this.getNoComponents() === components.length, "Appending component failed");
+        MethodFailedException.assertCondition(this.getComponent(this.getNoComponents() - 1) != null && this.getComponent(this.getNoComponents() - 1) != undefined && this.getComponent(this.getNoComponents() - 1) === c, "Appending component failed");
+        MethodFailedException.assertCondition(this.getNoComponents() === components.length, "Appending component failed");
     }
 
     public remove(i: number) {
@@ -75,7 +75,7 @@ export class StringName extends AbstractName {
         components.splice(i, 1);
         this.name = components.join(this.delimiter);
         this.noComponents--;
-        MethodFailureException.assertCondition(this.getNoComponents() === components.length, "Removing component failed");
+        MethodFailedException.assertCondition(this.getNoComponents() === components.length, "Removing component failed");
         
         if (this.getNoComponents() === 0) {
             this.empty = true;

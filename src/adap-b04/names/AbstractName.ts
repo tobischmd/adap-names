@@ -2,7 +2,7 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { MethodFailureException } from "../common/MethodFailureException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 export abstract class AbstractName implements Name {
 
@@ -94,7 +94,7 @@ export abstract class AbstractName implements Name {
         for (let i = 0; i < other.getNoComponents(); i++) {
             this.append(other.getComponent(i));
         }
-        MethodFailureException.assertCondition(this.getNoComponents() === oldLength, "Concatenation failed");
+        MethodFailedException.assertCondition(this.getNoComponents() === oldLength, "Concatenation failed");
     
     }
 

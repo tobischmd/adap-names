@@ -3,7 +3,7 @@ import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { MethodFailureException } from "../common/MethodFailureException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 export class StringArrayName extends AbstractName {
 
@@ -44,7 +44,7 @@ export class StringArrayName extends AbstractName {
         this.checkProperlyMasked(c);
         c = this.unescape(c, this.delimiter);
         this.components[i] = c;
-        MethodFailureException.assertCondition(this.components[i] != null && this.components[i] != undefined && this.components[i] === c, "Setting component failed");
+        MethodFailedException.assertCondition(this.components[i] != null && this.components[i] != undefined && this.components[i] === c, "Setting component failed");
     }
 
     public insert(i: number, c: string) {
@@ -54,7 +54,7 @@ export class StringArrayName extends AbstractName {
         c = this.unescape(c, this.delimiter);
         let length = this.getNoComponents();
         this.components.splice(i, 0, c);
-        MethodFailureException.assertCondition(this.components[i] != null && this.components[i] != undefined && this.components[i] === c && this.getNoComponents() === length + 1,"Inserting component failed");
+        MethodFailedException.assertCondition(this.components[i] != null && this.components[i] != undefined && this.components[i] === c && this.getNoComponents() === length + 1,"Inserting component failed");
     }
 
     public append(c: string) {
@@ -63,13 +63,13 @@ export class StringArrayName extends AbstractName {
         c = this.unescape(c, this.delimiter);
         let length = this.getNoComponents();
         this.components.push(c);
-        MethodFailureException.assertCondition(this.components[this.getNoComponents() - 1] != null && this.components[this.getNoComponents() - 1] != undefined && this.components[this.getNoComponents() - 1] === c && this.getNoComponents() === length + 1, "Appending component failed");
+        MethodFailedException.assertCondition(this.components[this.getNoComponents() - 1] != null && this.components[this.getNoComponents() - 1] != undefined && this.components[this.getNoComponents() - 1] === c && this.getNoComponents() === length + 1, "Appending component failed");
     }
 
     public remove(i: number) {
         IllegalArgumentException.assertCondition(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         let length = this.getNoComponents();
         this.components.splice(i, 1);
-        MethodFailureException.assertCondition(this.getNoComponents() === length - 1, "Removing component failed");
+        MethodFailedException.assertCondition(this.getNoComponents() === length - 1, "Removing component failed");
     }
 }
