@@ -1,6 +1,7 @@
 import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
+import { ServiceFailureException } from "../common/ServiceFailureException";
 
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
@@ -58,8 +59,24 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, bn !== "" && bn !== null, "Invalid base name");
+        try {
+            const result = new Set<Node>();
+            if (this.getBaseName() === bn) {
+                result.add(this);
+            }
+            this.assertClassInvariants();
+            return result;
+        } catch (e: any) {
+            if (e instanceof ServiceFailureException) {
+                throw e;
+            }
+            ServiceFailureException.assertCondition(false, "Error finding nodes", e)
+        }
+        return new Set<Node>();
     }
+
+
 
     protected assertClassInvariants(): void {
         const bn: string = this.doGetBaseName();
