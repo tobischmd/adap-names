@@ -25,7 +25,7 @@ export class Directory extends Node {
         AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, bn !== "" && bn !== null, "Invalid base name");
         try {
             const result: Set<Node> = new Set<Node>();
-            if (this.getBaseName() === bn) {
+            if (this.doGetBaseName() === bn) {
                 result.add(this);
             }
             this.childNodes.forEach((node) => {

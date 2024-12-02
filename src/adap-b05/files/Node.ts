@@ -62,7 +62,7 @@ export class Node {
         AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, bn !== "" && bn !== null, "Invalid base name");
         try {
             const result = new Set<Node>();
-            if (this.getBaseName() === bn) {
+            if (this.doGetBaseName() === bn) {
                 result.add(this);
             }
             this.assertClassInvariants();
