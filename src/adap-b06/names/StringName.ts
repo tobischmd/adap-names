@@ -50,7 +50,7 @@ export class StringName extends AbstractName {
         let components = clone.splitIntoComponents(clone.name);
         components[i] = c;
         clone.name = components.join(clone.delimiter);
-        MethodFailedException.assert(clone.getComponent(i) == null || clone.getComponent(i) == undefined || clone.getComponent(i) !== c, "Setting component failed");
+        MethodFailedException.assert(clone.getComponent(i) != null && clone.getComponent(i) != undefined && clone.getComponent(i) === c, "Setting component failed");
         return clone;
     }
 

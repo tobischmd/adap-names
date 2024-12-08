@@ -234,7 +234,24 @@ describe("Test Precondition StringArrayName", () => {
 })
 
 
+describe("Equality test", () => {
+  it("test isEqual", () => {
+    let n1: Name = new StringArrayName(["oss", "cs", "fau", "de"], '.');
+    let n2: Name = new StringName("oss.cs.fau.de");
+    expect(n1.isEqual(n2)).toBe(true);
+    expect(n1.getHashCode() == n2.getHashCode()).toBe(true);
 
+    n1 = n1.setComponent(1, "test");
+    n2 = n2.setComponent(1, "test");
+    expect(n1.isEqual(n2)).toBe(true);
+    expect(n1.getHashCode() == n2.getHashCode()).toBe(true);
+
+    n1 = n1.setComponent(2, "test");
+    n2 = n2.setComponent(2, "test2");
+    expect(n1.isEqual(n2)).toBe(false);
+    expect(n1.getHashCode() == n2.getHashCode()).toBe(false);
+  });
+});
 
 
 
