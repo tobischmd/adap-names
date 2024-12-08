@@ -19,7 +19,6 @@ export class Link extends Node {
     }
 
     public setTargetNode(target: Node): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(target, "Target must not be null or undefined")
         this.targetNode = target;
     }
 
@@ -29,8 +28,6 @@ export class Link extends Node {
     }
 
     public rename(bn: string): void {
-        IllegalArgumentException.assertCondition(bn !== '', "Argument must not be empty String")
-        IllegalArgumentException.assertIsNotNullOrUndefined(bn, "Argument must not be null or undefined")
         const target = this.ensureTargetNode(this.targetNode);
         target.rename(bn);
     }

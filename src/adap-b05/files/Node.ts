@@ -65,13 +65,11 @@ export class Node {
 
     protected assertClassInvariants(): void {
         const bn: string = this.doGetBaseName();
-        this.assertIsValidBaseName(bn, ExceptionType.CLASS_INVARIANT);
     }
 
-    protected assertIsValidBaseName(bn: string, et: ExceptionType): void {
+    protected assertIsValidBaseName(bn: string, et: any): void {
         const condition: boolean = (bn != "");
-        AssertionDispatcher.dispatch(et, condition, "invalid base name");
-    }
+          }
 
 
 

@@ -11,7 +11,7 @@ export class StringArrayName extends AbstractName {
 
     constructor(other: string[], delimiter?: string) {
         super(delimiter);
-        IllegalArgumentException.assertIsNotNullOrUndefined(other, "Argument must not be null or undefined");
+        IllegalArgumentException.assert(other != null && other != undefined, "Argument must not be null or undefined");
         this.components = other.map(c => this.unescape(c, this.delimiter));
     }
 
@@ -20,7 +20,7 @@ export class StringArrayName extends AbstractName {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        IllegalArgumentException.assertCondition(delimiter != null && delimiter.length == 1, "Delimiter must be a single character");
+        IllegalArgumentException.assert(delimiter != null && delimiter.length == 1, "Delimiter must be a single character");
         return this.components.join(delimiter);
     }
 
@@ -33,43 +33,43 @@ export class StringArrayName extends AbstractName {
     }
 
     public getComponent(i: number): string {
-        IllegalArgumentException.assertCondition(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
+        IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         let component = this.components[i];
         return component;
     }
 
     public setComponent(i: number, c: string) {
-        IllegalArgumentException.assertCondition(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
-        IllegalArgumentException.assertIsNotNullOrUndefined(c, "Argument must not be null or undefined");
+        IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
+        IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
         c = this.unescape(c, this.delimiter);
         this.components[i] = c;
-        MethodFailedException.assertCondition(this.components[i] != null && this.components[i] != undefined && this.components[i] === c, "Setting component failed");
+        MethodFailedException.assert(this.components[i] != null && this.components[i] != undefined && this.components[i] === c, "Setting component failed");
     }
 
     public insert(i: number, c: string) {
-        IllegalArgumentException.assertCondition(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
-        IllegalArgumentException.assertIsNotNullOrUndefined(c, "Argument must not be null or undefined");
+        IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
+        IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
         c = this.unescape(c, this.delimiter);
         let length = this.getNoComponents();
         this.components.splice(i, 0, c);
-        MethodFailedException.assertCondition(this.components[i] != null && this.components[i] != undefined && this.components[i] === c && this.getNoComponents() === length + 1,"Inserting component failed");
+        MethodFailedException.assert(this.components[i] != null && this.components[i] != undefined && this.components[i] === c && this.getNoComponents() === length + 1,"Inserting component failed");
     }
 
     public append(c: string) {
-        IllegalArgumentException.assertIsNotNullOrUndefined(c, "Argument must not be null or undefined");
+        IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
         c = this.unescape(c, this.delimiter);
         let length = this.getNoComponents();
         this.components.push(c);
-        MethodFailedException.assertCondition(this.components[this.getNoComponents() - 1] != null && this.components[this.getNoComponents() - 1] != undefined && this.components[this.getNoComponents() - 1] === c && this.getNoComponents() === length + 1, "Appending component failed");
+        MethodFailedException.assert(this.components[this.getNoComponents() - 1] != null && this.components[this.getNoComponents() - 1] != undefined && this.components[this.getNoComponents() - 1] === c && this.getNoComponents() === length + 1, "Appending component failed");
     }
 
     public remove(i: number) {
-        IllegalArgumentException.assertCondition(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
+        IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         let length = this.getNoComponents();
         this.components.splice(i, 1);
-        MethodFailedException.assertCondition(this.getNoComponents() === length - 1, "Removing component failed");
+        MethodFailedException.assert(this.getNoComponents() === length - 1, "Removing component failed");
     }
 }

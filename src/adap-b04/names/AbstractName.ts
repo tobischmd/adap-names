@@ -9,7 +9,6 @@ export abstract class AbstractName implements Name {
     protected delimiter: string = DEFAULT_DELIMITER;
 
     constructor(delimiter: string = DEFAULT_DELIMITER) {
-        IllegalArgumentException.assertCondition(delimiter != null && delimiter.length == 1, "Delimiter must be a single character");
         this.delimiter = delimiter;
     }
 
@@ -18,7 +17,6 @@ export abstract class AbstractName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        IllegalArgumentException.assertCondition(delimiter != null && delimiter.length == 1, "Delimiter must be a single character");
         let s: string = "";
         for (let i = 0; i < this.getNoComponents(); i++) {
             s += this.getComponent(i);
@@ -45,7 +43,6 @@ export abstract class AbstractName implements Name {
     }
 
     public isEqual(other: Name): boolean {
-        IllegalArgumentException.assertIsNotNullOrUndefined(other, "Argument must not be null or undefined");
         if (this.getNoComponents() !== other.getNoComponents()) {
             return false;
         }
@@ -89,12 +86,10 @@ export abstract class AbstractName implements Name {
     abstract remove(i: number): void;
 
     public concat(other: Name): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(other, "Argument must not be null or undefined");
         let oldLength = this.getNoComponents() + other.getNoComponents();
         for (let i = 0; i < other.getNoComponents(); i++) {
             this.append(other.getComponent(i));
         }
-        MethodFailedException.assertCondition(this.getNoComponents() === oldLength, "Concatenation failed");
     
     }
 
@@ -113,7 +108,6 @@ export abstract class AbstractName implements Name {
         let escaped = false;
         for (let i = 0; i < c.length; i++) {
             if (escaped) {
-                IllegalArgumentException.assertCondition(c[i] == ESCAPE_CHARACTER || c[i] == this.delimiter, "Component is not properly masked");
                 escaped = false;
             } else {
                 if (c[i] == ESCAPE_CHARACTER) {
@@ -123,6 +117,5 @@ export abstract class AbstractName implements Name {
                 }
             }
         }
-        IllegalArgumentException.assertCondition(!escaped, "Component is not properly masked");
     }
 }

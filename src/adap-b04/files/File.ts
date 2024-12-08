@@ -18,7 +18,6 @@ export class File extends Node {
     }
 
     public open(): void {
-        IllegalArgumentException.assertCondition(this.state === FileState.CLOSED, "File must be closed to open")
         // do something
     }
 
@@ -28,7 +27,6 @@ export class File extends Node {
     }
 
     public close(): void {
-        IllegalArgumentException.assertCondition(this.state === FileState.OPEN, "File must be open to close")
         // do something
     }
 

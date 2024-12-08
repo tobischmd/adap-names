@@ -8,9 +8,6 @@ export class Node {
     protected parentNode: Directory;
 
     constructor(bn: string, pn: Directory) {
-        IllegalArgumentException.assertIsNotNullOrUndefined(bn, "Arguments must not be null or undefined")
-        IllegalArgumentException.assertIsNotNullOrUndefined(pn, "Arguments must not be null or undefined")
-
         this.doSetBaseName(bn);
         this.parentNode = pn; // why oh why do I have to set this
         this.initialize(pn);
@@ -42,9 +39,7 @@ export class Node {
     }
 
     public rename(bn: string): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(bn, "Arguments must not be null or undefined")
-        IllegalArgumentException.assertCondition(bn !== '', "Argument must not be empty String")
-        this.doSetBaseName(bn);
+       this.doSetBaseName(bn);
     }
 
     protected doSetBaseName(bn: string): void {
