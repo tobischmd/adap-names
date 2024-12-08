@@ -1,4 +1,3 @@
-import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { ServiceFailureException } from "../common/ServiceFailureException";
@@ -19,12 +18,12 @@ export class Node {
 
     protected initialize(pn: Directory): void {
         this.parentNode = pn;
-        this.parentNode.add(this);
+        this.parentNode.addChildNode(this);
     }
 
     public move(to: Directory): void {
-        this.parentNode.remove(this);
-        to.add(this);
+        this.parentNode.removeChildNode(this);
+        to.addChildNode(this);
         this.parentNode = to;
     }
 
@@ -59,21 +58,7 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        AssertionDispatcher.dispatch(ExceptionType.PRECONDITION, bn !== "" && bn !== null, "Invalid base name");
-        try {
-            const result = new Set<Node>();
-            if (this.doGetBaseName() === bn) {
-                result.add(this);
-            }
-            this.assertClassInvariants();
-            return result;
-        } catch (e: any) {
-            if (e instanceof ServiceFailureException) {
-                throw e;
-            }
-            ServiceFailureException.assertCondition(false, "Error finding nodes", e)
-        }
-        return new Set<Node>();
+        throw new Error("needs implementation or deletion");
     }
 
 
@@ -87,5 +72,7 @@ export class Node {
         const condition: boolean = (bn != "");
         AssertionDispatcher.dispatch(et, condition, "invalid base name");
     }
+
+
 
 }

@@ -64,8 +64,8 @@ export class StringName extends AbstractName {
         this.length--;
     }
 
-     /** @methotype helper-method */
-     private splitIntoComponents(s: string): string[] {
+    /** @methotype helper-method */
+    private splitIntoComponents(s: string): string[] {
         let components: string[] = [];
         let escaped = false;
         let current = "";
@@ -75,7 +75,7 @@ export class StringName extends AbstractName {
                 if (escaped) {
                     escaped = false;
                 } else {
-                escaped = true;
+                    escaped = true;
                 }
             } else if (s[i] === this.delimiter && !escaped) {
                 components.push(current);

@@ -118,7 +118,7 @@ export class StringName implements Name {
                 if (escaped) {
                     escaped = false;
                 } else {
-                escaped = true;
+                    escaped = true;
                 }
             } else if (s[i] === this.delimiter && !escaped) {
                 components.push(current);

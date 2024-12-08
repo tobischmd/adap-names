@@ -9,15 +9,15 @@ export class Directory extends Node {
         super(bn, pn);
     }
 
-    public add(cn: Node): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(cn, "Child Node must not be null or undefined")
+    public hasChildNode(cn: Node): boolean {
+        return this.childNodes.has(cn);
+    }
+
+    public addChildNode(cn: Node): void {
         this.childNodes.add(cn);
     }
 
-    public remove(cn: Node): void {
-        IllegalArgumentException.assertIsNotNullOrUndefined(cn, "Child Node must not be null or undefined")
-        const childExists = this.childNodes.has(cn)
-        IllegalArgumentException.assertCondition(!childExists, "Node must be in Directory to remove it")
+    public removeChildNode(cn: Node): void {
         this.childNodes.delete(cn); // Yikes! Should have been called remove
     }
 
