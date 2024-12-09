@@ -18,7 +18,7 @@ export class StringName extends AbstractName {
         this.noComponents = this.splitIntoComponents(other).length;
     }
 
-    public clone(): Name {
+    public clone(): StringName {
         let clone = Object.create(this);
         Object.setPrototypeOf(clone, StringName.prototype);
         return clone;
@@ -41,7 +41,7 @@ export class StringName extends AbstractName {
         return this.unescape(component, this.delimiter);
     }
 
-    public setComponent(i: number, c: string) : Name {
+    public setComponent(i: number, c: string) : StringName {
         IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
@@ -54,7 +54,7 @@ export class StringName extends AbstractName {
         return clone;
     }
 
-    public insert(i: number, c: string) : Name {
+    public insert(i: number, c: string) : StringName {
         IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
@@ -72,7 +72,7 @@ export class StringName extends AbstractName {
         return clone;
     }
 
-    public append(c: string) : Name {
+    public append(c: string) : StringName {
         IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
 
@@ -87,7 +87,7 @@ export class StringName extends AbstractName {
         return clone;
     }
 
-    public remove(i: number): Name {
+    public remove(i: number): StringName {
         IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
 
         const clone = this.deepClone();

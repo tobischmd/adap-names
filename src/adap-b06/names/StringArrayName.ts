@@ -15,7 +15,7 @@ export class StringArrayName extends AbstractName {
         this.components = other.map(c => this.unescape(c, this.delimiter));
     }
 
-    public clone(): Name {
+    public clone(): StringArrayName {
         let clone = Object.create(this);
         Object.setPrototypeOf(clone, StringArrayName.prototype);
         return clone;
@@ -46,7 +46,7 @@ export class StringArrayName extends AbstractName {
         return component;
     }
 
-    public setComponent(i: number, c: string) : Name{
+    public setComponent(i: number, c: string) : StringArrayName{
         IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
@@ -57,7 +57,7 @@ export class StringArrayName extends AbstractName {
         return clone;
     }
 
-    public insert(i: number, c: string) : Name  {
+    public insert(i: number, c: string) : StringArrayName  {
         IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
@@ -69,7 +69,7 @@ export class StringArrayName extends AbstractName {
         return clone
     }
 
-    public append(c: string): Name {
+    public append(c: string): StringArrayName {
         IllegalArgumentException.assert(c != null && c != undefined, "Argument must not be null or undefined");
         this.checkProperlyMasked(c);
         c = this.unescape(c, this.delimiter);
@@ -81,7 +81,7 @@ export class StringArrayName extends AbstractName {
         return clone;
     }
 
-    public remove(i: number): Name {
+    public remove(i: number): StringArrayName {
         IllegalArgumentException.assert(i >= 0 && i < this.getNoComponents(), "Index out of bounds");
         let length = this.getNoComponents();
         const clone = this.deepClone();
